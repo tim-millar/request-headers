@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  root 'header#show'
+  root 'headers#show'
 end
