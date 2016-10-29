@@ -2,17 +2,23 @@ require 'rails_helper'
 
 describe HeadersController do
   describe 'GET show' do
-    let(:request_headers) {
+    let(:request_headers) { double('RequestHeaders', as_json: as_json) }
+    let(:as_json) {
       {
-        ipaddress: "127.0.0.1",
-        language: "en-GB,en-US;q=0.8,en;q=0.6",
-        software: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+        ipaddress: '127.0.0.1',
+        language: 'en-GB',
+        software: 'X11; Linux x86_64',
       }
     }
 
+    before do
+      allow(RequestHeaders).to receive(:new).with(request).
+        and_return(request_headers)
+    end
+
     it 'returns the headers for a request' do
       get :show
-      expect(response.body).to eql(request_headers)
+      expect(response.body).to eql(JSON.generate(as_json))
     end
   end
 end
