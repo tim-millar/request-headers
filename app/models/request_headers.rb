@@ -20,11 +20,11 @@ class RequestHeaders
   end
 
   def language
-    accept_language.split(',').first
+    accept_language && accept_language.split(',').first
   end
 
   def software
-    software_with_parens.gsub(/[\(\)]/, '')
+    user_agent && software_with_parens.gsub(/[\(\)]/, '')
   end
 
   def accept_language
